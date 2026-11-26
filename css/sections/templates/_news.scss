@@ -281,7 +281,7 @@
 
       &:hover {
         h3 {
-          text-decoration: underline;
+          // text-decoration: underline;
         }
       }
     }
@@ -601,7 +601,7 @@ span.date {
 
   .filterWrap {
     display: grid;
-    grid-template-columns: 343px 343px 343px 1fr;
+    grid-template-columns: 1fr 1fr 1fr 180px;
     align-items: end;
     grid-column-gap: 16px;
 

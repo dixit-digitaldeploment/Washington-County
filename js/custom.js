@@ -20,6 +20,37 @@ $(document).ready(function () {
     closeBtn.insertBefore(magnifier);
   });
 
+  $(".owl-general .owl-carousel").owlCarousel({
+    loop: true,
+    dots: true,
+    autoplay: true,
+    margin: 10,
+    nav: true,
+    autoWidth: false,
+    items: 1,
+    navText: [
+      '<i class="fa-solid fa-chevron-left"></i>',
+      '<i class="fa-solid fa-chevron-right"></i>',
+    ],
+    // navText: [
+    //   '<img src="/img/arrow_forward.svg">',
+    //   '<img src="/img/arrow_forward.svg">',
+    // ],
+    navContainer: ".owl-general .custom-nav",
+    /*responsive:{
+        0:{
+            items: 1
+        },
+        600:{
+            items: 1
+        },
+        1000:{
+            items: 1,
+			    stagePadding: 200
+        }
+    }*/
+  });
+  
   // Search toggle accessibility
   $(".search_txt")
     .attr("tabindex", "0")
@@ -141,7 +172,6 @@ $(document).ready(function () {
   /* ------------------------------------------------------------------
        Navbar & Mobile Menu
     ------------------------------------------------------------------ */
-
   // Hamburger toggle
   $(".navbar-toggler").on("click", function () {
     $(this).toggleClass("active");
@@ -156,108 +186,144 @@ $(document).ready(function () {
   // Mobile: append plusMinus toggles and mobile table wraps
   //Navbar
   // if (jQuery(window).width() < 1200) {
-    $(".navbar-nav  > li.has-dropdown").append(
-      '<div class="plusMinus" tabindex="0" aria-expanded="false" role="button" aria-label="Toggle Dropdown"></div>'
-    );
 
-    jQuery(".navbar-nav  > li.has-dropdown  > .plusMinus")
-      .off("click keydown")
-      .click(function () {
+  $(
+    ".navbar-nav  > li.menu-item-has-children, .navbar-nav  > li.megamenu-item , .navbar-nav  > li.has-dropdown"
+  ).each(function () {
+    if ($(this).children(".plusMinus").length === 0) {
+      $(this)
+        .children("a")
+        .after(
+          '<div class="plusMinus" tabindex="0" aria-expanded="false" role="button" aria-label="Toggle Dropdown"></div>'
+        );
+    }
+  });
+  jQuery(
+    ".navbar-nav  > li.menu-item-has-children  > .plusMinus , .navbar-nav  > li.megamenu-item  > .plusMinus, .navbar-nav  > li.has-dropdown  > .plusMinus"
+  )
+    .off("click keydown")
+    .on("click keydown", function (e) {
+      if (
+        e.type === "click" ||
+        (e.type === "keydown" && (e.key === "Enter" || e.key === " "))
+      ) {
+        var $btn = jQuery(this);
         var $li = jQuery(this).parent();
         var $dropdown = $li.find(".dropdown-menu");
         const isOpen = jQuery(this).attr("aria-expanded") === "true";
         console.log(isOpen);
-        // // // hide other menu items
-        // jQuery(this)
-        //   .closest(".navbar-nav")
-        //   .children()
-        //   .children()
-        //   .not(".dropdown-menu")
-        //   .hide();
 
-        // add back button if not already added
-        //         if ($dropdown.find(".menu-back").length === 0) {
-        //           $dropdown.prepend(`<a href="#" class="menu-back"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        //   <path d="M3.23125 10.5438C3.08438 10.4 3 10.2063 3 10C3 9.79375 3.08438 9.6 3.23125 9.45625L8.73125 4.20625C9.03125 3.91875 9.50625 3.93125 9.79063 4.23125C10.075 4.53125 10.0656 5.00625 9.76562 5.29063L5.62188 9.25H16.25C16.6656 9.25 17 9.58438 17 10C17 10.4156 16.6656 10.75 16.25 10.75H5.62188L9.76875 14.7063C10.0688 14.9938 10.0781 15.4656 9.79375 15.7656C9.50937 16.0656 9.03438 16.075 8.73438 15.7906L3.23438 10.5406L3.23125 10.5438Z" fill="#1C5DEA"/>
-        // </svg>Back</a>`);
-        //         }
+        $li
+          .siblings(".has-dropdown")
+          .removeClass("activeBlue")
+          .children(".dropdown-menu")
+          .slideUp("fast");
+        $li
+          .siblings(".has-dropdown")
+          .children(".plusMinus")
+          .removeClass("minsicon")
+          .attr("aria-expanded", "false");
 
-        $dropdown.slideToggle("fast");
-        $li.toggleClass("activeBlue");
-        // $li.siblings(".nav-item").hide();
-        // $li
-        //   .closest(".navbar-collapse")
-        //   .find(".top_header,.select_language,.top_search,.btn_sm")
-        //   .hide();
-        jQuery(this)
-          .toggleClass("minsicon")
-          .attr("aria-expanded", String(!isOpen));
-      });
-
-    // back button click
-    jQuery(".navbar-nav").on("click", ".menu-back", function (e) {
-      e.preventDefault();
-
-      var $dropdown = jQuery(this).closest(".dropdown-menu");
-      var $nav = jQuery(this).closest(".navbar-nav");
-
-      $dropdown.slideUp("fast");
-
-      $nav.children().children().not(".dropdown-menu").show();
-
-      $dropdown.parent().removeClass("activeBlue");
-      $dropdown.parent().siblings(".nav-item").show();
-      $dropdown
-        .closest(".navbar-collapse")
-        .find(".top_header,.select_language,.top_search,.btn_sm")
-        .show();
-      console.log($dropdown.parent().children(".plusMinus"));
-      $dropdown.parent().children(".plusMinus").removeClass("minsicon");
-
-      // ✅ remove all back buttons inside this dropdown
-      $dropdown.find(".menu-back").remove();
-    });
-
-    // close menus after clicking a link
-    jQuery(".navbar-nav").on("click", "a", function (e) {
-      if (jQuery(this).hasClass("menu-back")) {
-        return;
+        // toggle the clicked one
+        if (isOpen) {
+          $dropdown.slideUp("fast");
+          $li.removeClass("activeBlue");
+          $btn.removeClass("minsicon").attr("aria-expanded", "false");
+        } else {
+          $dropdown.slideDown("fast");
+          $li.addClass("activeBlue");
+          $btn.addClass("minsicon").attr("aria-expanded", "true");
+        }
       }
-
-      var $nav = jQuery(this).closest(".navbar-nav");
-
-      // close all dropdowns
-      $nav.find(".dropdown-menu,.submenu").slideUp("fast");
-
-      // show all menu items
-      $nav.children().children().not(".dropdown-menu").show();
-      $nav.children(".nav-item").show();
-      // remove active classes
-      $nav.find(".activeBlue").removeClass("activeBlue");
-      $nav.find(".minsicon").removeClass("minsicon");
-      $(".navbar-toggler").removeClass("active");
-      $(".navbar-collapse").removeClass("show");
     });
 
-
-    //$(".select_language ").insertBefore('.navbar-toggler  ');
-    // $(".soc_nav_wrap ").insertAfter('.nav_bottom');
-    // $(".social_media ").insertAfter('.nav_bottom  ');
-    $(".megamenu_drop  li.menu-item-has-children  ").append(
-      '<div class="pls_minus"></div>'
-    );
-
-    jQuery(".megamenu_drop  li.menu-item-has-children  .pls_minus")
-      .off("click keydown")
-      .click(function () {
-        $(this).parent().find(".sub-menu").slideToggle("fast");
-        $(this).parent().toggleClass("active-item");
-        $(this).toggleClass("minus-info");
-      });
-    $(".wp-block-advgb-table").each(function () {
-      $(this).wrap('<div class="table-wrap"></div>');
+  jQuery(document)
+    .off("click.navDropdown")
+    .on("click.navDropdown", function (e) {
+      if (
+        jQuery(e.target).closest(
+          ".navbar-nav  > li.menu-item-has-children, .navbar-nav  > li.megamenu-item , .navbar-nav  > li.has-dropdown"
+        ).length
+      ) {
+        return; // clicked inside a menu item
+      }
+      jQuery(
+        ".navbar-nav  > li.menu-item-has-children, .navbar-nav  > li.megamenu-item , .navbar-nav  > li.has-dropdown"
+      )
+        .removeClass("activeBlue")
+        .children(".dropdown-menu")
+        .slideUp("fast");
+      jQuery(
+        ".navbar-nav  > li.menu-item-has-children  > .plusMinus , .navbar-nav  > li.megamenu-item  > .plusMinus, .navbar-nav  > li.has-dropdown  > .plusMinus"
+      )
+        .removeClass("minsicon")
+        .attr("aria-expanded", "false");
     });
-    $(".wp-block-group > table").wrap('<div class="table-wrapper"></div>');
+
+  // back button click
+  jQuery(".navbar-nav").on("click", ".menu-back", function (e) {
+    e.preventDefault();
+
+    var $dropdown = jQuery(this).closest(".dropdown-menu");
+    var $nav = jQuery(this).closest(".navbar-nav");
+
+    $dropdown.slideUp("fast");
+
+    $nav.children().children().not(".dropdown-menu").show();
+
+    $dropdown.parent().removeClass("activeBlue");
+    $dropdown.parent().siblings(".nav-item").show();
+    $dropdown
+      .closest(".navbar-collapse")
+      .find(".top_header,.select_language,.top_search,.btn_sm")
+      .show();
+    console.log($dropdown.parent().children(".plusMinus"));
+    $dropdown.parent().children(".plusMinus").removeClass("minsicon");
+
+    // âœ… remove all back buttons inside this dropdown
+    $dropdown.find(".menu-back").remove();
+  });
+
+  // close menus after clicking a link
+  jQuery(".navbar-nav").on("click", "a", function (e) {
+    if (jQuery(this).hasClass("menu-back")) {
+      return;
+    }
+
+    var $nav = jQuery(this).closest(".navbar-nav");
+
+    // close all dropdowns
+    $nav.find(".dropdown-menu,.submenu").slideUp("fast");
+
+    // show all menu items
+    $nav.children().children().not(".dropdown-menu").show();
+    $nav.children(".nav-item").show();
+    // remove active classes
+    $nav.find(".activeBlue").removeClass("activeBlue");
+    $nav.find(".minsicon").removeClass("minsicon");
+    $(".navbar-toggler").removeClass("active");
+    $(".navbar-collapse").removeClass("show");
+  });
+
+  //$(".select_language ").insertBefore('.navbar-toggler  ');
+  // $(".soc_nav_wrap ").insertAfter('.nav_bottom');
+  // $(".social_media ").insertAfter('.nav_bottom  ');
+  $(".megamenu_drop  li.menu-item-has-children  ").append(
+    '<div class="pls_minus"></div>'
+  );
+
+  jQuery(".megamenu_drop  li.menu-item-has-children  .pls_minus")
+    .off("click keydown")
+    .click(function () {
+      $(this).parent().find(".sub-menu").slideToggle("fast");
+      $(this).parent().toggleClass("active-item");
+      $(this).toggleClass("minus-info");
+    });
+  $(".wp-block-advgb-table").each(function () {
+    $(this).wrap('<div class="table-wrap"></div>');
+  });
+  $(".wp-block-group > table").wrap('<div class="table-wrapper"></div>');
+
   // }
 
   // Keep search at the top of the mobile menu; move login and language below the nav
@@ -271,10 +337,10 @@ $(document).ready(function () {
 
     function moveTopHeader() {
       if (mobileQuery.matches) {
-        $search.prependTo(".navbar-collapse");
+        // $search.prependTo(".navbar-collapse");
         $topHeader.insertAfter(".nav_bottom");
       } else if ($topMenu.length) {
-        $search.prependTo($topMenu);
+        // $search.prependTo($topMenu);
         if ($originalNext && $originalNext.length) {
           $topHeader.insertBefore($originalNext);
         } else if ($originalParent && $originalParent.length) {
@@ -297,13 +363,26 @@ $(document).ready(function () {
   });
 
   // Add a focusable toggle div
-  $(".dropdown-menu > li.has-submenu").prepend(
-    '<div class="plus-minus" tabindex="0" aria-expanded="false" role="button" aria-label="Toggle submenu"></div>'
-  );
-
-  $(".dropdown-menu")
+  // $(".dropdown-menu > li.has-submenu").prepend(
+  //   '<div class="plus-minus" tabindex="0" aria-expanded="false" role="button" aria-label="Toggle submenu"></div>'
+  // );
+  // 2nd/3rd/4th level submenu toggle: plus-minus button
+  $(
+    ".dropdown-menu > li.has-submenu,.dropdown-menu   > li.menu-item-has-children "
+  ).each(function () {
+    if ($(this).children(".plus-minus").length === 0) {
+      $(this)
+        .children("a")
+        .after(
+          '<div class="plus-minus" tabindex="0" aria-expanded="false" role="button" aria-label="Toggle submenu"></div>'
+        );
+    }
+  });
+  $(
+    ".dropdown-menu > li.has-submenu>.plus-minus,.dropdown-menu > li.menu-item-has-children >.plus-minus , .mega-submenu > li.menu-item-has-children > .plus-minus"
+  )
     .off("click keydown")
-    .on("click keydown", ".plus-minus", function (e) {
+    .on("click keydown", function (e) {
       // Handle click or Enter/Space key
       if (
         e.type === "click" ||
@@ -312,7 +391,7 @@ $(document).ready(function () {
         e.preventDefault(); // Prevent scrolling on Space
 
         const $this = $(this);
-        const $submenu = $this.parent().find("> .submenu");
+        const $submenu = $this.parent().find("> .submenu,.mega-submenu");
         const isOpen = $this.attr("aria-expanded") === "true";
 
         // Toggle current
@@ -590,7 +669,7 @@ $(".close").on("click", function () {
 (function ($) {
   function toggleAccordion($title) {
     var dropDown = $title.closest(".acc__card").find(".acc__panel");
-    $title.closest(".acc__main").find(".acc__panel").not(dropDown).slideUp();
+    // $title.closest(".acc__main").find(".acc__panel").not(dropDown).slideUp();
 
     if ($title.hasClass("active")) {
       $title.removeClass("active");
@@ -611,7 +690,7 @@ $(".close").on("click", function () {
     .attr("aria-expanded", "false")
     .on("click", function (e) {
       e.preventDefault();
-      toggleAccordion($(this));
+      toggleAccordion($(this)); 
     })
     .on("keydown", function (e) {
       if (
@@ -819,5 +898,51 @@ jQuery(document).ready(function ($) {
     if ($(window).width() >= 1200) {
       $(".menu-wrapper").removeClass("expanded");
     }
+  });
+});
+
+jQuery(document).ready(function ($) {
+  function adjustSelectWidth($select) {
+    var $selectedOption = $select.find("option:selected");
+    var text = $selectedOption.text();
+
+    // Create a temporary element to measure text width
+    var $temp = $("<span>")
+      .text(text)
+      .css({
+        "font-family": $select.css("font-family"),
+        "font-size": $select.css("font-size"),
+        "font-weight": $select.css("font-weight"),
+        "letter-spacing": $select.css("letter-spacing"),
+        "white-space": "nowrap",
+        position: "absolute",
+        visibility: "hidden",
+      })
+      .appendTo("body");
+
+    var textWidth = $temp.outerWidth();
+    console.log(textWidth);
+    console.log(text);
+    $temp.remove();
+
+    // Add space for padding, borders, and dropdown arrow
+    var extraWidth =
+      parseFloat($select.css("padding-left")) +
+      parseFloat($select.css("padding-right")) +
+      parseFloat($select.css("border-left-width")) +
+      parseFloat($select.css("border-right-width")) +
+      50;
+
+    $select.css("width", textWidth + extraWidth + "px");
+  }
+
+  // Adjust width on page load
+  $(".goog-te-combo").each(function () {
+    adjustSelectWidth($(this));
+  });
+
+  // Adjust width when the selected option changes
+  $(document).on("change", ".goog-te-combo", function () {
+    adjustSelectWidth($(this));
   });
 });

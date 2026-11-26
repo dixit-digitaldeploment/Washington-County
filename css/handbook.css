@@ -55,8 +55,14 @@
   margin-top: 0;
 }
 
-.handbook-body h2 {
+.handbook-body h2,
+.handbook-body h3,
+.handbook-body h4,
+.handbook-body [id] {
   scroll-margin-top: 130px;
+}
+
+.handbook-body h2 {
   margin-top: 40px;
   color: #003597;
 }
@@ -91,6 +97,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.handbook-contents ul ul,
+.handbook-contents__editor ul ul {
+  margin-left: 20px;
 }
 
 .handbook-contents li,

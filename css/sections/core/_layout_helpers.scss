@@ -107,7 +107,7 @@ figure.aligncenter {
 
   >ul,
   >ol {
-    padding-left: 40px;
+    padding-left: 40px !important;
 
     +.wp-block-heading {
       padding-top: 20px;
@@ -128,6 +128,9 @@ figure.aligncenter {
         padding-left: 0px !important;
         padding-right: 0px !important;
       }
+    }
+    >ul.wp-block-list{
+      padding-left: 40px !important;
     }
 
     > {
@@ -278,7 +281,8 @@ figure.aligncenter {
   .wp-block-columns,
   .wp-block-media-text,
   .wp-block-image {
-    max-width: 900px !important;
+    // max-width: 900px !important;
+    max-width: 1200px !important;
 
     &.alignwide {
       max-width: 1200px !important;
@@ -699,6 +703,7 @@ body .is-layout-constrained>.wp-block-group {
   > {
     * {
       max-width: 900px;
+      // max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
     }

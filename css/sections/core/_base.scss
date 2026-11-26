@@ -1,9 +1,8 @@
 //componenets (button, anchor tags, heading tags etc)
 body {
-  color: #404040;
-  font-size: 18px;
+  color: #000;
+  font-size: 16px;
   @include primary-font;
-  background-color: $primary-light;
 
   &.wp-admin {
     font-family:
@@ -38,41 +37,40 @@ h6,
 
 h1,
 .h1 {
-  font-size: 34px;
-  color: #404040;
+  font-size: 46px;
+  color: #003A52;
   font-weight: 700;
   margin-bottom: 24px;
 }
 
 h2,
 .h2 {
-  font-size: 28px;
-  color: #404040;
+  font-size: 42px;
+  color: #003A52;
   font-weight: 700;
   margin-bottom: 24px;
 }
 
 h3,
 .h3 {
-  font-size: 24px;
-  color: #404040;
+  font-size: 34px;
+  color: #003A52;
   font-weight: 700;
 }
 
 h4,
 .h4 {
-  font-size: 22px;
-  color: #404040;
+  font-size: 24px;
+  color: #AE4A13;
   font-weight: 700;
 }
 
 h5,
 .h5 {
-  font-size: 18px;
+  font-size: 21px;
   color: #404040;
   font-weight: 700;
   text-transform: none;
-  font-family: $secondary-font;
 }
 
 h6,
@@ -80,7 +78,8 @@ h6,
   color: #404040;
   font-size: 16px;
   text-transform: none;
-  font-weight: 700;
+  font-weight: 600;
+  font-family: $secondary-font;
 }
 
 .h1,
@@ -94,9 +93,9 @@ h6,
 
 p {
   line-height: 24px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: normal;
-  color: #404040;
+  color: #000;
   @include primary-font;
 }
 
@@ -116,7 +115,7 @@ a {
   text-decoration: underline;
 
   &:hover {
-    color: $primary;
+    color: $tertiary;
     text-decoration: underline;
     text-decoration-style: solid !important;
   }
@@ -130,7 +129,7 @@ p a,
   text-decoration-style: solid !important;
 
   &:hover {
-    color: $primary;
+    color: $tertiary;
     text-decoration: underline;
   }
 }
@@ -168,29 +167,30 @@ strong {
 }
 
 .btn_sm {
-  background: $primary;
-  border-radius: 36px;
-  font-family: $primary-font;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 8px 12px;
+  background: $tertiary;
+  border-radius: 8px;
+  font-family: $secondary-font;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 24px;
   cursor: pointer;
   text-decoration: none;
-  white-space: nowrap;
+  white-space: normal;
   color: #fff;
-  border: 1px solid $primary;
+  border: 1px solid $tertiary;
   text-align: center;
   display: inline-flex;
   gap: 8px;
   width: fit-content;
   // min-width: 145px;
-  white-space: break-spaces;
+  // white-space: break-spaces;
+  line-height: 1;
 
   &:hover,
   &:focus-visible {
     color: $white;
-    background: $gray-700;
-    border-color: $gray-700;
+    background: $link-hover;
+    border-color: $link-hover;
     text-decoration: none;
 
     img {
@@ -206,8 +206,35 @@ strong {
 
   // secondary
   &.secondary {
-    background: #fff;
+    background: none;
+    color: $tertiary;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid transparent;
+
+    img {
+      @include img-blue;
+    }
+
+    &:hover,
+    &:focus-within {
+      // background: $primary;
+      border-color: $primary;
+      color: $primary;
+
+      // text-decoration: underline;
+      img {
+        @include img-white;
+      }
+    }
+  }
+
+  &.tertiary {
+    background: transparent;
     color: $primary;
+    border-radius: 0;
+    border-color: transparent;
+    border-bottom-color: $primary;
 
     img {
       @include img-blue;
@@ -218,28 +245,7 @@ strong {
       background: $primary;
       border-color: $primary;
       color: $white;
-
-      // text-decoration: underline;
-      img {
-        @include img-white;
-      }
-    }
-  }
-
-  &.tertiary {
-    background: #fff;
-    color: $primary;
-    border-color: $primary;
-
-    img {
-      @include img-blue;
-    }
-
-    &:hover,
-    &:focus-within {
-      background: #1c5dea;
-      border-color: #fff;
-      color: $white;
+      border-radius: 8px;
 
       // text-decoration: underline;
       img {
@@ -315,17 +321,17 @@ video {
 
 .form-control {
   min-height: 44px;
-  border: 1px solid $gray-400;
+  border: 1px solid #687A81;
   //   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   background-color: $white;
-  color: $gray-500;
-  border-radius: 4px !important;
-  -webkit-border-radius: 4px !important;
-  -moz-border-radius: 4px !important;
-  -ms-border-radius: 4px !important;
-  -o-border-radius: 4px !important;
+  color: $gray-600;
+  border-radius: 8px !important;
+  -webkit-border-radius: 8px !important;
+  -moz-border-radius: 8px !important;
+  -ms-border-radius: 8px !important;
+  -o-border-radius: 8px !important;
   padding: 8px;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 400;
 
@@ -460,11 +466,11 @@ input[type="radio"] {
 }
 
 label.title {
-  @include secondary-font;
+  @include primary-font;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  color: $gray-700;
+  color: $primary;
   line-height: 1;
   margin-bottom: 5px;
 }
@@ -473,17 +479,17 @@ label.title {
 
   a,
   #reset-filters {
-    font-family: $primary-font;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    color: $primary;
-    text-decoration: none;
-    border-radius: 24px;
-    border: 1.5px solid #003597;
-    background: var(--Theme-colors-Background-White, #FFF);
-    padding: 10px 12px;
-    display: inline-block;
+    // font-family: $primary-font;
+    // font-size: 16px;
+    // font-style: normal;
+    // font-weight: 700;
+    // color: $primary;
+    // text-decoration: none;
+    // border-radius: 24px;
+    // border: 1.5px solid #003597;
+    // background: var(--Theme-colors-Background-White, #FFF);
+    // padding: 10px 12px;
+    // display: inline-block;
 
     img {
       margin-right: 5px;
@@ -491,9 +497,9 @@ label.title {
 
     &:hover {
       // text-decoration: underline;
-      background: $primary-light;
-      border-color: $gray-400;
-      color: $gray-700;
+      // background: $primary-light;
+      // border-color: $gray-400;
+      // color: $gray-700;
     }
   }
 }
@@ -510,7 +516,7 @@ label.title {
     text-decoration: underline;
 
     svg {
-      @include img-orange;
+      @include img-yellow;
     }
   }
 }
@@ -749,4 +755,73 @@ label.title {
       @include img-blue;
     }
   }
+}
+
+.status {
+  border-radius: 16px;
+  background: #fff;
+  margin-bottom: 16px;
+  display: inline-block;
+  padding: 8px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1px solid;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  &_open {
+    color: #27500A;
+    border-color: #3b6d11;
+
+    &::before {
+      background: #3b6d11;
+    }
+  }
+
+  &_closed {
+    border-color: $error-mid;
+    color: $error-dark;
+
+    &::before {
+      background: $error-mid;
+    }
+  }
+
+  &_pending {
+    border-color: $info-mid;
+    color: $info-dark;
+
+    &::before {
+      background: $info-mid;
+    }
+  }
+
+  &_expiring {
+    border-color: $warning-mid;
+    color: $warning-dark;
+
+    &::before {
+      background: $warning-mid;
+    }
+  }
+}
+
+.category {
+  margin: 0;
+  padding: 8px;
+  border-radius: 12px;
+  background: $secondary-bg;
+  color: $primary;
+  font-family: $primary-font;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
 }
