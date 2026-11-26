@@ -7,19 +7,6 @@
    ========================================================================== */
 
 $(document).ready(function () {
-  /* ------------------------------------------------------------------
-       Accessibility & ARIA
-    ------------------------------------------------------------------ */
-
-  // Main wrapper role
-  $(".main_wrapper").attr("role", "main").attr("id", "page_content");
-  $(".ajaxsearchpro").each(function () {
-    var closeBtn = $(this).find(".proclose");
-    var magnifier = $(this).find(".promagnifier");
-
-    closeBtn.insertBefore(magnifier);
-  });
-
   $(".owl-general .owl-carousel").owlCarousel({
     loop: true,
     dots: true,
@@ -50,7 +37,19 @@ $(document).ready(function () {
         }
     }*/
   });
-  
+  /* ------------------------------------------------------------------
+       Accessibility & ARIA
+    ------------------------------------------------------------------ */
+
+  // Main wrapper role
+  $(".main_wrapper").attr("role", "main").attr("id", "page_content");
+  $(".ajaxsearchpro").each(function () {
+    var closeBtn = $(this).find(".proclose");
+    var magnifier = $(this).find(".promagnifier");
+
+    closeBtn.insertBefore(magnifier);
+  });
+
   // Search toggle accessibility
   $(".search_txt")
     .attr("tabindex", "0")
@@ -690,7 +689,7 @@ $(".close").on("click", function () {
     .attr("aria-expanded", "false")
     .on("click", function (e) {
       e.preventDefault();
-      toggleAccordion($(this)); 
+      toggleAccordion($(this));
     })
     .on("keydown", function (e) {
       if (
