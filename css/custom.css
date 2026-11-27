@@ -4989,7 +4989,7 @@ legend.gform-field-label {
   width: 100%;
   text-align: center;
 }
-.home .nav_section h2 {
+.home .nav_section h2, .home .nav_section .h2 {
   margin: 0;
   color: #ffffff;
   font-family: "Inter", sans-serif;
@@ -6009,13 +6009,13 @@ legend.gform-field-label {
 }
 
 .no-found-info {
+  text-align: center;
+  max-width: 900px;
   margin: auto;
   padding: 40px;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  background: var(--Utility-colors-Grayscale-White, #FFF);
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 }
 .no-found-info > * {
   margin-bottom: 24px;
@@ -6024,13 +6024,15 @@ legend.gform-field-label {
   margin-bottom: 40px;
 }
 .no-found-info h1 {
-  margin-bottom: 45px;
+  color: #404040;
+  margin-bottom: 10px;
+}
+.no-found-info h2 {
+  color: #404040;
+  margin-bottom: 40px;
 }
 .no-found-info p {
-  font-weight: 700;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #c0c0C0;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 .no-found-info ul {
   display: flex;
@@ -6040,6 +6042,9 @@ legend.gform-field-label {
 .no-found-info ul li {
   width: -moz-max-content;
   width: max-content;
+}
+.no-found-info .btn_sm {
+  margin: auto;
 }
 .no-found-info .btn_yellow {
   margin-top: 15px;
